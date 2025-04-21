@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Gold-Bug Interactive</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="book-container">
+        <div class="page left-page" id="leftPage">[Blank]</div>
+        <div class="page right-page" id="rightPage">The Gold-Bug by Edgar Allan Poe</div>
+
+        <button class="arrow left" id="leftArrow">&#8592;</button>
+        <button class="arrow right" id="rightArrow">&#8594;</button>
+        <button class="puzzle-button hidden" id="puzzleButton">??</button>
+    </div>
+
+    <div id="puzzleModal" class="modal hidden">
+        <div class="modal-content">
+            <h3>Puzzle Time!</h3>
+            <p>This is where the puzzle goes. Solve to continue.</p>
+            <button id="solvePuzzle">Solve</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
