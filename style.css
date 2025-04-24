@@ -1,89 +1,344 @@
-body {
+* {
     margin: 0;
-    font-family: Georgia, serif;
-    background: #f0e6d2;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-.book-container {
+body {
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+
+    font-family: sans-serif;
+    background-color: #f7e98e;
+}
+
+/* Book */
+.book {
     position: relative;
+    width: 500px;
+    height: 675px;
+    transition: transform 0.5s;
 }
 
-.page {
-    width: 300px;
-    height: 400px;
-    margin: 10px;
-    background: #fffaf0;
-    border: 1px solid #ccc;
-    padding: 20px;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
-}
-
-.left-page {
-    text-align: left;
-}
-
-.right-page {
-    text-align: right;
-}
-
-.arrow {
+.paper {
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 2rem;
-    background: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    perspective: 1500px;
+}
+
+.front,
+.back {
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: left;
+    transition: transform 0.5s;
+}
+
+.front {
+    z-index: 1;
+    backface-visibility: hidden;
+    border-left: 3px solid #f7e98e;
+}
+
+.back {
+    z-index: 0;
+}
+
+.front-content,
+.back-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;  
+    align-items: flex-start;    
+    flex-direction: column;
+}
+
+.back-content {
+    transform: rotateY(180deg)
+}
+
+.title-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: 'Georgia', serif;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    line-height: 1.5;
+}
+
+.page-text {
+    font-family: 'Georgia', serif;
+    font-size: .8rem;
+    line-height: 1.6;
+    text-align: justify;
+    justify-content: flex-start;
+    margin-left: .5rem;
+    margin-right: .5rem;
+}
+
+.indent {
+    text-indent: 2em;
+}
+
+/* Paper flip effect */
+.flipped .front,
+.flipped .back {
+    transform: rotateY(-180deg);
+}
+
+/* Controller Buttons */
+button {
     border: none;
+    background-color: transparent;
     cursor: pointer;
-    z-index: 2;
+    margin: 10px;
+    transition: transform 0.5s;
 }
 
-.left {
-    left: 20px;
+button:focus {
+    outline: none;
 }
 
-.right {
-    right: 20px;
+button:hover i {
+    color: #636363;
 }
 
-.arrow.disabled {
-    opacity: 0.3;
-    pointer-events: none;
+i {
+    font-size: 50px;
+    color: gray;
 }
 
-.puzzle-button {
+/* Paper stack order */
+#p1 {
+    z-index: 18;
+}
+
+#p2 {
+    z-index: 17;
+}
+
+#p3 {
+    z-index: 16;
+}
+
+#p4{
+    z-index:15;
+}
+
+#p5{
+    z-index:14;
+}
+
+#p6{
+    z-index:13;
+}
+
+#p7{
+    z-index:12;
+}
+
+#p8{
+    z-index:11;
+}
+
+#p9{
+    z-index:10;
+}
+
+#p10{
+    z-index:9;
+}
+
+#p11{
+    z-index:8;
+}
+
+#p12{
+    z-index:7;
+}
+
+#p13{
+    z-index:6;
+}
+
+#p14{
+    z-index:5;
+}
+
+#p15{
+    z-index:4;
+}
+
+#p16{
+    z-index:3;
+}
+
+#p17{
+    z-index:2;
+}
+
+#p18{
+    z-index:1;
+}
+
+/* at the bottom-left of the book area */
+#puzzle-btn {
     position: absolute;
     bottom: 20px;
-    right: 50%;
-    transform: translateX(50%);
-    font-size: 1.5rem;
-    padding: 10px;
+    left: 20px;
+    width: 150px;
+    height: 40px;
+    padding: 0.5rem 1rem;
+    font-family: Georgia, serif;
+    background: #775E0F; 
+    color: #F6F0D1;
+    border: none;
     cursor: pointer;
-}
-
-.hidden {
-    display: none;
-}
-
-.modal {
+    z-index: 100;
+  }
+  
+  /* Full-screen dark overlay */
+  #puzzle-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.6);
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.8);
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.modal-content {
-    background: #fff;
-    padding: 20px;
+    z-index: 200;
+  }
+  
+  #puzzle-overlay.hidden {
+    display: none;
+  }
+  
+  .puzzle-content {
+    background: white;
+    padding: 2rem;
     text-align: center;
-}
+    border-radius: 0.5rem;
+  }
+  
+  .puzzle-content img {
+    max-width: 80vw;
+    max-height: 60vh;
+    cursor: crosshair;
+  }
+
+  /* for WaldoImg */
+.hotspot-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* size & position this to exactly cover your antenna */
+  .hotspot {
+    position: absolute;
+    left: 350px;   /* tweak these values until it sits on the antenna */
+    top:  230px;
+    width: 35px;
+    height: 80px;
+    cursor: crosshair;
+    background: transparent;
+  }
+
+   /* for map */
+  .target-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .target {
+    position: absolute;
+    left: 235px;
+    top:  190px;
+    width: 70px;
+    height: 70px;
+    cursor: crosshair;
+    background: transparent;
+  }
+  
+  /* ink container & image */
+#ink-container {
+    position: relative;
+    display: inline-block;
+    cursor: crosshair;
+    transition: box-shadow 0.2s;
+  }
+  
+  /* hidden text container sits on top of the image */
+  #hidden-text {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    font-family: 'Papyrus', fantasy;
+    font-size: 3rem;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    pointer-events: none; /* we’re revealing sequentially; no need for pointer-events here */
+  }
+  
+  /* each character span */
+  .hidden-letter {
+    opacity: 0;
+    transition: opacity 0.2s ease-in;
+    /* no pointer-events needed if we reveal sequentially */
+  }  
+
+  @keyframes flame {
+    0% {
+      opacity: 1;
+      transform: translate(0,0) scale(1) rotate(0deg);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(var(--dx), var(--dy)) scale(0.3) rotate(45deg);
+    }
+  }
+  
+  .flame {
+    position: absolute;
+    width: 8px;
+    height: 12px;
+    background: radial-gradient(
+      circle at 50% 30%,
+      #cb3009f6 0%,
+      #e26d20 40%,
+      #ea8e2b 70%,
+      transparent 100%
+    );
+    border-radius: 50% 50% 40% 40%;
+    filter: blur(1px);
+    pointer-events: none;
+    animation: flame 800ms ease-out forwards;
+    mix-blend-mode: screen;
+  }
+  
+  
+  
+  
+  
+  
+
+  
+
+
+  
