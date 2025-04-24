@@ -22,14 +22,14 @@ const paper16 = document.querySelector('#p16');
 const paper17 = document.querySelector('#p17');
 const paper18 = document.querySelector('#p18');
 
-
+// Puzzle Elements
 const puzzleBtn = document.querySelector("#puzzle-btn");
 const puzzleOverlay = document.querySelector("#puzzle-overlay");
 const puzzleTitle = puzzleOverlay.querySelector("h2");
 const puzzlePrompt = puzzleOverlay.querySelector("p");
 const puzzleImg = puzzleOverlay.querySelector("img");
 
-puzzleBtn.style.display = 'none';
+puzzleBtn.style.display = 'none'; //default
 const puzzles = {
     2: {
       type:    "hotspot",
@@ -60,7 +60,7 @@ const puzzles = {
     12: {
       type:    "ink",
       title:   "Plain Parchment?",
-      prompt:  "Heat the parchment to reveal the hidden message.",
+      prompt:  "Rveal the hidden message.",
       imgSrc:  "assets/images/parchment-blank.jpg",
       hiddenText: "You found the Secret Message!",
       solved:  false
@@ -78,7 +78,7 @@ const puzzles = {
   
   
 
-// Event Listener
+// Event Listeners
 prevBtn.addEventListener("click", goPrevPage);
 nextBtn.addEventListener("click", goNextPage);
 puzzleBtn.addEventListener("click", () => {
@@ -309,9 +309,7 @@ function goPrevPage() {
 
 function checkPuzzleLock() {
     const config = puzzles[currentLocation - 1];  
-    // we key puzzles by the page-number *you just flipped away from*;
-    // e.g. flipping paper2 increments currentLocation from 2→3, so
-    // you look at puzzles[2]
+
     if (config && !config.solved) {
       puzzleBtn.classList.remove("hidden");
       nextBtn.style.display = "none";
@@ -380,14 +378,12 @@ function checkPuzzleLock() {
           break;
 
           case "ink": {
-            // build spans for each letter
             const text = config.hiddenText || "";
             const letters = text
               .split("")
               .map(ch => `<span class="hidden-letter">${ch === " " ? "&nbsp;" : ch}</span>`)
               .join("");
           
-            // inject the HTML
             container.innerHTML = `
               <h2>${config.title}</h2>
               <p>${config.prompt}</p>
@@ -397,8 +393,7 @@ function checkPuzzleLock() {
               </div>
             `;
           
-            // grab nodes & init state
-            const ink         = container.querySelector("#ink-container");
+            const ink = container.querySelector("#ink-container");
             const letterSpans = Array.from(container.querySelectorAll(".hidden-letter"));
             let lastX = null, lastY = null, lastT = null;
             let heatStart = null;
@@ -407,23 +402,22 @@ function checkPuzzleLock() {
             let revealedCount = 0;
             let solvedTimeout;
           
-            // mouse‐move → heat tracking → letter‐by‐letter reveal
+            // Mouse‐Move => Heat Tracking => Letter‐by‐letter Reveal
             ink.addEventListener("mousemove", e => {
               const now = e.timeStamp;
           
-              // 1) prime on first move
               if (lastT === null) {
                 lastX = e.clientX; lastY = e.clientY; lastT = now;
                 return;
               }
           
-              // 2) compute instantaneous speed
+              // Instantaneous Speed
               const dx = e.clientX - lastX;
               const dy = e.clientY - lastY;
               const dt = now - lastT;
               const speed = Math.sqrt(dx*dx + dy*dy) / dt;
           
-              // 3) glow & heat timer
+              //Start Letter Reveal
               if (speed > speedThreshold) {
                 ink.classList.add("heat-hot");
                 if (!heatStart) heatStart = now;
@@ -442,37 +436,33 @@ function checkPuzzleLock() {
                 flame.style.left = (x - rect.left) + "px";
                 flame.style.top  = (y - rect.top)  + "px";
               
-                // random flicker direction
+                // Random Flicker Direction
                 const angle = Math.random() * Math.PI * 2;
                 const dist  = Math.random() * 40 + 20; // travel 20–60px
                 flame.style.setProperty("--dx", (Math.cos(angle)*dist) + "px");
                 flame.style.setProperty("--dy", (Math.sin(angle)*dist) + "px");
-              
                 ink.appendChild(flame);
                 flame.addEventListener("animationend", () => flame.remove());
                 }
               }
               
-
-            if (speed > speedThreshold) {
+             if (speed > speedThreshold) {
                 createFlame(e.clientX, e.clientY);
               }
-              
-  
           
-              // 4) once hot long enough, reveal *next* letter
+              //Letter Reveal
               if (heatStart && now - heatStart >= requiredHeat && revealedCount < letterSpans.length) {
                 letterSpans[revealedCount].style.opacity = 1;
                 revealedCount++;
                 heatStart = now;  // require re-heat for next char
               }
           
-              // 5) when all letters are out, schedule solve (with 2s delay)
+              // When all letters are visible, solve with 2s delay
               if (revealedCount === letterSpans.length && !solvedTimeout) {
                 solvedTimeout = setTimeout(() => markSolved(config), 2000);
               }
           
-              // 6) save for next event
+              // Save for future
               lastX = e.clientX; lastY = e.clientY; lastT = now;
             });
           
@@ -520,16 +510,16 @@ function startCorruption() {
     }
     collectTextNodes(container);
   
-    // The actual swap-letters function
+    //Swap-letters Function
     function corruptRandomLetter() {
       if (allTextNodes.length === 0) return;
   
-      // pick a random text node
+      // Pick Random Node
       const node = allTextNodes[Math.floor(Math.random() * allTextNodes.length)];
       const text = node.nodeValue;
       if (text.length < 2) return setTimeout(corruptRandomLetter, corruptionInterval);
   
-      // swap two random chars
+      // Swap Two Random Chars
       let i = Math.floor(Math.random() * text.length);
       let j;
       do { j = Math.floor(Math.random() * text.length); } while (j === i);
@@ -542,9 +532,7 @@ function startCorruption() {
       setTimeout(corruptRandomLetter, corruptionInterval);
     }
   
-    // kick it off
     setTimeout(corruptRandomLetter, corruptionInterval);
-
   }
   
   

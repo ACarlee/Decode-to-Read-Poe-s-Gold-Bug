@@ -17,7 +17,7 @@ And, just as the pieces begin to make sense....the story breaks down.
 
 The final page corrupts itself before your eyes. Letters shift, words rearrange, and language becomes meaningless. The text crumbles, as if overwritten by time or perhaps madness.
 
-🧠 Interactive Puzzles
+🧩 Interactive Puzzles
 Each chapter challenges the reader with a different type of problem-solving, drawing from both Poe’s story and modern digital game design. Puzzles include:
 
 🧍‍♂️ "Where’s Waldo?"–style visual hunt
@@ -66,14 +66,7 @@ Reach the final page and try to hold on to meaning as it slips away.
 ⚠️ Content Disclaimer
 The Gold-Bug was written in the 19th century and reflects the language and social attitudes of its time. Some passages may include outdated or offensive terminology, particularly in the depiction of race and character dialogue. These elements have been preserved in the source text for historical accuracy and literary context, but they do not reflect the views or values of the creator of this project.
 
-✨ Future Ideas
-Disable screen captures for true ephemerality
-
-Save a user’s corrupted version on exit
-
-Make the puzzles reactive to user performance or failures
-
-👻 Credits
+😁 Credits
 Created by: Carlee Auld
 
 Inspired by: Edgar Allan Poe’s The Gold-Bug

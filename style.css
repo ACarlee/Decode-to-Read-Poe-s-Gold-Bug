@@ -98,7 +98,6 @@ body {
     transform: rotateY(-180deg);
 }
 
-/* Controller Buttons */
 button {
     border: none;
     background-color: transparent;
@@ -249,8 +248,8 @@ i {
   /* size & position this to exactly cover your antenna */
   .hotspot {
     position: absolute;
-    left: 350px;   /* tweak these values until it sits on the antenna */
-    top:  230px;
+    left: 350px; 
+    top: 230px;
     width: 35px;
     height: 80px;
     cursor: crosshair;
@@ -273,7 +272,7 @@ i {
     background: transparent;
   }
   
-  /* ink container & image */
+  /* ink container */
 #ink-container {
     position: relative;
     display: inline-block;
@@ -281,7 +280,6 @@ i {
     transition: box-shadow 0.2s;
   }
   
-  /* hidden text container sits on top of the image */
   #hidden-text {
     position: absolute;
     top: 0; left: 0;
@@ -293,14 +291,13 @@ i {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    pointer-events: none; /* we’re revealing sequentially; no need for pointer-events here */
+    pointer-events: none; /* we’re revealing sequentially, so need for pointer-events here */
   }
   
   /* each character span */
   .hidden-letter {
     opacity: 0;
     transition: opacity 0.2s ease-in;
-    /* no pointer-events needed if we reveal sequentially */
   }  
 
   @keyframes flame {
